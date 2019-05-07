@@ -1,0 +1,16 @@
+---
+- name: My first playbook
+  hosts: localhost
+
+  tasks:
+  - name: deploy software from aptitude respository
+    apt:
+            name: bastet # install the software package bastet
+            state: present # we want the software to be INSTALLED
+    become: yes ## run in sudo mode
+    register: results ## save the JSON that is sent back
+
+  - name: print to the screen our results variable
+    debug:
+            var: results
+
