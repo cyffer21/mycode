@@ -1,0 +1,30 @@
+---
+- name: learning how to register
+  hosts: planet-express
+  gather_facts: yes
+
+  tasks:
+          - name: Reach out and get url
+            get_url:
+             url: https://www.random.org/integers/?num=1&min=0&max=1&col=1&base=10&format=plain&rnd=new
+             dest: ~/rand.txt
+             force: yes
+
+          - name: Read a file and save the results
+            command: cat ~/rand.txt
+            register: readfile
+           
+          - name: YOU WON!
+            debug:
+             msg: "Congrats you Won! :)"
+            when: readfile.stdout == "1"
+
+          - name: You Lost!
+            debug:
+             msg: "You Lost...Loser!"
+            when: readfile.stdout == "0"
+
+             # - name: show the name of the file
+             # debug:
+             # var: readfile.stdout
+ 
